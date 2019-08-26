@@ -2,40 +2,40 @@ import React, { useState } from 'react';
 import Board from './components/Board';
 import axios from 'axios';
 import './App.css';
-
-function App() {
+const App = () => {
   // State
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const loadquote = async () => {
-    try {
-      const response = await axios.get(
-        'cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?'
-      );
-      console.log(response);
-      setQuote(response.quoteText);
-      setAuthor(response.quoteAuthor);
-      // const response = await fetch("https://qvoca-bestquotes-v1.p.rapidapi.com/quote", {
-      //   "method": "GET",
-      //   "headers": {
-      //     "x-rapidapi-host": "qvoca-bestquotes-v1.p.rapidapi.com",
-      //     "x-rapidapi-key": "39c5e36746mshec39042173d1fa9p1f85edjsn21bc6f3d2400"
-      //   }
-      // })
-      // console.log(response);
-      // setQuote(response.message);
-      // setAuthor(response.author);
-    } catch (err) {
-      console.error(err.message);
-    }
+  const loadQuotes = async () => {
+    setLoading(true);
+    const response = await axios.get(
+      'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
+    );
+    randomQuote(response.data.quotes);
+    setLoading(false);
+  };
+
+  const randomQuote = arrayQuotes => {
+    let index = Math.floor(Math.random() * 103);
+    let quote = arrayQuotes[index].quote;
+    let author = arrayQuotes[index].author;
+
+    setQuote(quote);
+    setAuthor(author);
   };
 
   return (
     <div className='container'>
-      <Board loadquote={loadquote} quote={quote} author={author} />
+      <Board
+        loadQuotes={loadQuotes}
+        quote={quote}
+        author={author}
+        loading={loading}
+      />
     </div>
   );
-}
+};
 
 export default App;

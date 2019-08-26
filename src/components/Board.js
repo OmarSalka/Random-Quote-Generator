@@ -1,38 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
+import Spinner from './Spinner';
 import PropTypes from 'prop-types';
 
-const Board = ({ icon1, icon2, loadquote, quote, author }) => {
+const Board = ({ icon1, icon2, loadQuotes, quote, author, loading }) => {
   useEffect(() => {
-    loadquote();
+    loadQuotes();
     // eslint-disable-next-line
   }, []);
 
-  const clickHandler = event => {
-    loadquote();
-  };
+  const clickHandler = event => {};
+
+  const spin = <Spinner />;
+
+  const content = (
+    <Fragment>
+      <i className='fas fa-quote-left fa-2x fa-fw'></i>
+      <p className='primary'>{quote}</p>
+      <p style={{ textAlign: 'right' }}>-{author}</p>
+      <div className='buttons'>
+        <div>
+          <a href='#' style={buttonStyling}>
+            <i className={icon1}></i>
+          </a>{' '}
+          <a href='#' style={buttonStyling}>
+            <i className={icon2}></i>
+          </a>
+        </div>
+        <div>
+          <a href='#' style={buttonStyling} onClick={clickHandler}>
+            New Quote
+          </a>
+        </div>
+      </div>
+    </Fragment>
+  );
 
   return (
     <div className='container'>
-      <div className='quote-box'>
-        <i className='fas fa-quote-left fa-2x fa-fw'></i>{' '}
-        <p className='primary'>{quote}</p>
-        <p style={{ textAlign: 'right' }}>-{author}</p>
-        <div className='buttons'>
-          <div>
-            <a href='#' style={buttonStyling}>
-              <i className={icon1}></i>
-            </a>{' '}
-            <a href='#' style={buttonStyling}>
-              <i className={icon2}></i>
-            </a>
-          </div>
-          <div>
-            <a href='#' style={buttonStyling} onClick={clickHandler}>
-              New Quote
-            </a>
-          </div>
-        </div>
-      </div>
+      <div className='quote-box'>{loading ? spin : content}</div>
     </div>
   );
 };
@@ -52,9 +57,8 @@ Board.defaultProps = {
 Board.propType = {
   icon1: PropTypes.string.isRequired,
   icon2: PropTypes.string.isRequired,
-  loadQuote: PropTypes.func.isRequired,
-  quote: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired
+  loadQuotes: PropTypes.func.isRequired,
+  quotes: PropTypes.array.isRequired
 };
 
 export default Board;
