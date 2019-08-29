@@ -10,7 +10,7 @@ That is through a third-party api that pulls quotes
 
 Enables the user to tweet the quote without having to type a word, redirects you to a page where you have the option to edit your auto generated tweet and login.
 
-### Post it on tumblr
+### Post on tumblr
 
 Self Explanatory
 
