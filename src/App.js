@@ -6,19 +6,24 @@ const App = () => {
   // State
   const [quote, setQuote] = useState('');
   const [author, setAuthor] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [quotes, setQuotes] = useState([]);
+
+  const clickHandler = event => {
+    event.preventDefault();
+    randomQuote(quotes);
+  };
 
   const loadQuotes = async () => {
-    setLoading(true);
     const response = await axios.get(
       'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
     );
     randomQuote(response.data.quotes);
-    setLoading(false);
   };
 
   const randomQuote = arrayQuotes => {
-    let index = Math.floor(Math.random() * 103);
+    setQuotes(arrayQuotes);
+
+    let index = Math.floor(Math.random() * 101);
     let quote = arrayQuotes[index].quote;
     let author = arrayQuotes[index].author;
 
@@ -32,7 +37,7 @@ const App = () => {
         loadQuotes={loadQuotes}
         quote={quote}
         author={author}
-        loading={loading}
+        clickHandler={clickHandler}
       />
     </div>
   );

@@ -7,21 +7,33 @@
 }
 
 body {
-  background-color: #333;
-}
-
-.container {
   display: flex;
   height: 100vh;
   align-items: center;
   justify-content: center;
 }
 
+.background {
+  background: #333 url(/image_resources/showcase.jpg) no-repeat center
+    center/cover;
+}
 .quote-box {
   max-width: 600px;
   padding: 3rem;
   border-radius: 2%;
-  background-color: aliceblue;
+  background-color: #f0f8ff;
+}
+
+.transition {
+  transition: all 1s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+}
+.transition.disappear {
+  /* background: red;
+  border-radius: 50%; */
+  opacity: 1;
+  visibility: hidden;
 }
 
 .primary {
@@ -33,4 +45,9 @@ body {
 .buttons {
   display: flex;
   justify-content: space-between;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.5;
 }
